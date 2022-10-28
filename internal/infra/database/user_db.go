@@ -22,6 +22,5 @@ func (u *User) FindByEmail(email string) (*entity.User, error) {
 	if err := u.DB.Where("email = ?", email).First(&user).Error; err != nil {
 		return nil, err
 	}
-
 	return &user, nil
 }
