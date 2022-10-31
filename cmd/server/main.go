@@ -8,6 +8,8 @@ import (
 	"github.com/MatThHeuss/go-rest-api/internal/entity"
 	"github.com/MatThHeuss/go-rest-api/internal/infra/database"
 	"github.com/MatThHeuss/go-rest-api/internal/infra/webserver/handlers"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -28,6 +30,14 @@ func main() {
 	productDB := database.NewProduct(db)
 	productHandler := handlers.NewProductHandler(productDB)
 
-	http.HandleFunc("/products", productHandler.CreateProduct)
-	http.ListenAndServe(":8080", nil)
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Post("/products", productHandler.CreateProduct)
+	r.Get("/products/{id}", productHandler.GetProduct)
+	r.Put("/products/{id}", productHandler.UpdateProduct)
+	r.Delete("/products/{id}", productHandler.DeleteProduct)
+	r.Get("/products", productHandler.GetProducts)
+
+	http.ListenAndServe(":8080", r)
+
 }
