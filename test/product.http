@@ -1,0 +1,7 @@
+POST http://localhost:8080/products
+Content-Type: application/javascript
+
+{
+    "name":"My product",
+    "price":100.00
+}
