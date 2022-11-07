@@ -11,7 +11,7 @@ GET http://localhost:8080/products/c7446bc8-cd71-4190-b80c-1625ea7a0dd6 HTTP/1.1
 
 ###
 GET http://localhost:8080/products HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njc4NDQ5MjAsInN1YiI6IjVmNWU2OWM5LTI4ZWUtNDJhZi04ZDAzLWMzN2RhZDI1OGNkMyJ9.0sfLipEKkPLC0Uc3HHYC5nyBowIcCdAxUrPwnMMKav8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njc4NDczMjcsInN1YiI6IjVmNWU2OWM5LTI4ZWUtNDJhZi04ZDAzLWMzN2RhZDI1OGNkMyJ9.bzzBAnrUTkHJoxDNmFpZO3g43_K8a5W9rNVEhMaML1o
 
 ###
 GET http://localhost:8080/products?page=4&limit=3&sort=desc HTTP/1.1

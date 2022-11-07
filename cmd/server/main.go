@@ -8,8 +8,8 @@ import (
 	"github.com/MatThHeuss/go-rest-api/internal/entity"
 	"github.com/MatThHeuss/go-rest-api/internal/infra/database"
 	"github.com/MatThHeuss/go-rest-api/internal/infra/webserver/handlers"
+	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/jwtauth"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -31,10 +31,14 @@ func main() {
 	productDB := database.NewProduct(db)
 	userDB := database.NewUser(db)
 	productHandler := handlers.NewProductHandler(productDB)
-	userHandler := handlers.NewUserHandler(userDB, configs.TokenAuth, configs.JWTExpiresIn)
+	userHandler := handlers.NewUserHandler(userDB)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.WithValue("jwt", configs.TokenAuth))
+	r.Use(middleware.WithValue("jwtExpiresIn", configs.JWTExpiresIn))
+	//r.Use(LogRequest)
 	r.Route("/products", func(r chi.Router) {
 		r.Use(jwtauth.Verifier(configs.TokenAuth))
 		r.Use(jwtauth.Authenticator)
@@ -50,4 +54,12 @@ func main() {
 
 	http.ListenAndServe(":8080", r)
 
+}
+
+// Custom middleware
+func LogRequest(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Request: %s %s", r.Method, r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
 }
