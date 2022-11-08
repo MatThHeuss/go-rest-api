@@ -22,11 +22,11 @@ func TestUser_ValidatePassword(t *testing.T) {
 
 	assert.NotEqual(t, "123456", user.Password)
 
-	err = user.ValidatePassword("123456")
-	assert.Nil(t, err)
+	bool := user.ValidatePassword("123456")
+	assert.True(t, bool)
 
-	err = user.ValidatePassword("1234567")
-	assert.NotNil(t, err)
+	bool = user.ValidatePassword("1234567")
+	assert.False(t, bool)
 
 }
 

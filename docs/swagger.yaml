@@ -1,0 +1,17 @@
+basePath: /
+host: localhost:8080
+info:
+  contact:
+    email: matheus.dev.br@gmail.com
+    name: Matheus Santos
+  description: Product API with authentication
+  termsOfService: http://swagger.io/terms/
+  title: Go rest API
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

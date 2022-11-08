@@ -15,6 +15,20 @@ import (
 	"gorm.io/gorm"
 )
 
+// @title 					Go rest API
+// @version 				1.0
+// @description 			Product API with authentication
+// @termsOfService 			http://swagger.io/terms/
+
+// @contact.name 			Matheus Santos
+// @contact.email 			matheus.dev.br@gmail.com
+
+// @host 					localhost:8080
+// @BasePath 				/
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
 func main() {
 	configs, err := configs.LoadConfig(".")
 	if err != nil {
