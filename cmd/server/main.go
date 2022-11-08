@@ -5,12 +5,14 @@ import (
 	"net/http"
 
 	"github.com/MatThHeuss/go-rest-api/configs"
+	_ "github.com/MatThHeuss/go-rest-api/docs"
 	"github.com/MatThHeuss/go-rest-api/internal/entity"
 	"github.com/MatThHeuss/go-rest-api/internal/infra/database"
 	"github.com/MatThHeuss/go-rest-api/internal/infra/webserver/handlers"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth"
+	httpSwagger "github.com/swaggo/http-swagger"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -23,7 +25,7 @@ import (
 // @contact.name 			Matheus Santos
 // @contact.email 			matheus.dev.br@gmail.com
 
-// @host 					localhost:8080
+// @host 					localhost:8000
 // @BasePath 				/
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
@@ -66,7 +68,8 @@ func main() {
 	r.Post("/users", userHandler.CreateUser)
 	r.Post("/users/generate_token", userHandler.GetJwt)
 
-	http.ListenAndServe(":8080", r)
+	r.Get("/docs/*", httpSwagger.Handler(httpSwagger.URL("http://localhost:8000/docs/doc.json")))
+	http.ListenAndServe(":8000", r)
 
 }
 
