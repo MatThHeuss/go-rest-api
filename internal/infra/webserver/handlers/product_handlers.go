@@ -38,8 +38,15 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var product dto.CreateProductInput
 	err := json.NewDecoder(r.Body).Decode(&product)
 	if err != nil {
+		msg := struct {
+			Message string `json:"message"`
+		}{
+			Message: err.Error(),
+		}
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
+		json.NewEncoder(w).Encode(msg)
+		return
 	}
 
 	p, err := entity.NewProduct(product.Name, product.Price)
