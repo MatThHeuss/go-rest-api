@@ -44,8 +44,16 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 
 	p, err := entity.NewProduct(product.Name, product.Price)
 	if err != nil {
+		msg := struct {
+			Message string `json:"message"`
+		}{
+			Message: err.Error(),
+		}
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
+		json.NewEncoder(w).Encode(msg)
+		return
+
 	}
 
 	err = h.ProductDB.Create(p)
