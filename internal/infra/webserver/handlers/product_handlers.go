@@ -23,6 +23,17 @@ func NewProductHandler(db database.ProductInterface) *ProductHandler {
 	}
 }
 
+// Create Product godoc
+// @Summary      Create product
+// @Description  Create products
+// @Tags         products
+// @Accept       json
+// @Produce      json
+// @Param        request     body      dto.CreateProductInput  true  "product request"
+// @Success      201
+// @Failure      500         {object}  Error
+// @Router       /products [post]
+// @Security ApiKeyAuth
 func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var product dto.CreateProductInput
 	err := json.NewDecoder(r.Body).Decode(&product)
